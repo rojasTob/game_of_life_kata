@@ -1,6 +1,8 @@
 Game Of Life - Kata
 ===================
 
+(Angela Rojas)
+
 General installation instructions:
 
 Install build essentials:
