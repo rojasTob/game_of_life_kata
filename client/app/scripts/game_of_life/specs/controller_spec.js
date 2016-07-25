@@ -42,6 +42,52 @@ describe('Controller: game_of_life', function () {
 
       });
 
+      it('should analyze the first case of neighbours', function(){
+          var matrixResult = [
+              ['.','.','.','.','.','.','.','.'],
+              ['.','.','.','.','.','.','.','.'],
+              ['.','.','.','.','.','.','.','.'],
+              ['.','.','.','.','.','.','.','.']];
+
+          scope.initMatrix(4,8);
+          scope.aliveCell(1,4);
+          scope.aliveCell(2,4);
+          scope.analyzeMatrix();
+          expect(scope.matrix).toEqual(matrixResult);
+      });
+
+      it('should analyze the second case of neighbours', function(){
+          var matrixResult = [
+              ['.','.','.','.','.','.','.','.'],
+              ['.','.','.','.','.','.','.','.'],
+              ['.','.','.','*','*','.','.','.'],
+              ['.','.','.','.','.','.','.','.']];
+
+          scope.initMatrix(4,8);
+          scope.aliveCell(2,2);
+          scope.aliveCell(2,3);
+          scope.aliveCell(2,4);
+          scope.aliveCell(1,6);
+          scope.analyzeMatrix();
+          expect(scope.matrix).toEqual(matrixResult);
+      });
+
+      it('should analyze the third case of neighbours', function(){
+          var matrixResult = [
+              ['.','.','.','.','.','.','.','.'],
+              ['.','.','.','.','.','.','.','.'],
+              ['.','.','.','*','*','.','.','.'],
+              ['.','.','.','.','.','.','.','.']];
+
+          scope.initMatrix(4,8);
+          scope.aliveCell(2,2);
+          scope.aliveCell(2,3);
+          scope.aliveCell(2,4);
+          scope.aliveCell(1,6);
+          scope.analyzeMatrix();
+          expect(scope.matrix).toEqual(matrixResult);
+      });
+
   });
 
   describe('when going to /game_of_life', function() {
