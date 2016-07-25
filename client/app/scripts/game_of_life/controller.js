@@ -5,10 +5,6 @@ angular.module('Game_of_life')
 
   $scope.controller_loaded = 'Game of life loaded!';
 
-  if($scope.not_tested) {
-    // This line is not tested!
-  }
-
 })
 .config(function ($routeProvider) {
   $routeProvider
