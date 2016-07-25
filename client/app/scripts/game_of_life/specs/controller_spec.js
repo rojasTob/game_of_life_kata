@@ -16,6 +16,32 @@ describe('Controller: game_of_life', function () {
     it('should set "controller_loaded" variable in scope', function() {
       expect(scope.controller_loaded).toContain('loaded');
     });
+
+    it('should set init state of the matrix',function(){
+      var matrixInit = [
+        ['.','.','.','.','.','.','.','.'],
+        ['.','.','.','.','.','.','.','.'],
+        ['.','.','.','.','.','.','.','.'],
+        ['.','.','.','.','.','.','.','.']];
+      scope.initMatrix(4,8);
+      expect(scope.matrix).toEqual(matrixInit);
+    });
+
+      it('should insert an alive cell in the matrix',function(){
+        scope.initMatrix(4,8);
+        var matrixWithAliveCells = [
+            ['.','.','.','.','.','.','.','.'],
+            ['.','.','.','.','*','.','.','.'],
+            ['.','.','.','*','*','.','.','.'],
+            ['.','.','.','.','.','.','.','.']];
+
+        scope.aliveCell(1,4);
+        scope.aliveCell(2,4);
+        scope.aliveCell(2,3);
+        expect(scope.matrix).toEqual(matrixWithAliveCells);
+
+      });
+
   });
 
   describe('when going to /game_of_life', function() {
