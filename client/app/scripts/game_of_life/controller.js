@@ -1,122 +1,158 @@
 'use strict';
 
 angular.module('Game_of_life')
-.controller('game_of_life', function ($scope) {
+    .controller('game_of_life', function ($scope) {
 
-  $scope.controller_loaded = 'Game of life loaded!';
-  $scope.matrix = [];
+        $scope.controller_loaded = 'Game of life loaded!';
+        $scope.matrix = [];
+        $scope.matrixClone = [];
 
-  $scope.initMatrix = function (rows,cols){
-      var matrix = [];
-      for(var i=0; i<rows; i++) {
-          var row = [];
-          for(var j=0; j<cols; j++){
-              row [j] = '.';
-          }
-          matrix[i] = row;
-      }
-      $scope.matrix = matrix;
-  };
+        $scope.initMatrix = function (rows, cols) {
+            var matrix = [];
+            for (var row = 0; row < rows; row++) {
+                var matrixRow = [];
+                for (var col = 0; col < cols; col++) {
+                    matrixRow [col] = '.';
+                }
+                matrix[row] = matrixRow;
+            }
+            $scope.matrix = matrix;
+        };
 
-  $scope.aliveCell = function(row, col){
-      $scope.matrix[row][col] = '*';
-  };
+        $scope.aliveCell = function (row, col) {
+            $scope.matrix[row][col] = '*';
+        };
 
-  $scope.analyzeMatrix = function(){
-      var liveCellNeighbours = 0;
-      //var deadCellNeighbours = 0;
-      for(var i=0; i<$scope.matrix.length; i++) {
-          for(var j=0; j<$scope.matrix[i].length; j++){
-              if($scope.matrix[i][j] === '*'){
-                  liveCellNeighbours = liveCellNeighbours + findRowNeighbours(i,j,'*');
-                  liveCellNeighbours = liveCellNeighbours + findColNeighbours(i,j,'*');
-                  liveCellNeighbours = liveCellNeighbours + findDiagonalNeighbours(i,j,'*');
-              }
-              //else{
-              //    deadCellNeighbours = deadCellNeighbours + findRowNeighbours(i,j,'.');
-              //    deadCellNeighbours = deadCellNeighbours + findColNeighbours(i,j,'.');
-              //    deadCellNeighbours = deadCellNeighbours + findDiagonalNeighbours(i,j,'.');
-              //}
+        $scope.analyzeAliveCells = function () {
+            for (var row = 0; row < $scope.matrix.length; row++) {
+                for (var col = 0; col < $scope.matrix[row].length; col++) {
+                    if ($scope.matrix[row][col] === '*' && canOperateWithThisCell(row,col)) {
+                        var neighbours = 0;
+                        neighbours = findRowNeighbours(row, col) + findColNeighbours(row, col) + findDiagonalNeighbours(row, col);
+                        killCell(neighbours, row, col);
+                    }
+                }
+            }
+        };
 
-              killCellFirstCase(liveCellNeighbours, i, j);
-              killCellSecondCase(liveCellNeighbours, i, j);
-          }
-      }
-  };
+        $scope.analyzeDeadCells = function () {
+            for (var row = 0; row < $scope.matrix.length; row++) {
+                for (var col = 0; col < $scope.matrix[row].length; col++) {
+                    if ($scope.matrix[row][col] === '.' && canOperateWithThisCell(row,col)) {
+                        var neighbours = 0;
+                        neighbours = findRowNeighbours(row, col) + findColNeighbours(row, col) + findDiagonalNeighbours(row, col);
+                        aliveCell(neighbours, row, col);
+                    }
+                }
+            }
+        };
 
-  $scope.toggle = function(){
-     $scope.aliveCell(0,0);
-  };
+        $scope.cloneMatrix = function(){
+            for (var row = 0; row < $scope.matrix.length; row++) {
+                var rowClone = [];
+                for(var col = 0 ; col< $scope.matrix[row].length ; col++){
+                    rowClone[col] = $scope.matrix[row][col];
+                }
+                $scope.matrixClone[row] = rowClone;
+            }
+        };
 
-  $scope.initMatrix(4,8);
-  $scope.aliveCell(1,4);
-  $scope.aliveCell(2,4);
-  $scope.aliveCell(2,3);
+        $scope.nextGeneration = function () {
+            $scope.matrixClone = [];
+            $scope.cloneMatrix();
+            $scope.analyzeAliveCells();
+            $scope.analyzeDeadCells();
+            $scope.matrix = $scope.matrixClone;
+        };
 
-  function findRowNeighbours(row,col,liveOrDead){
-      var neighbours = 0;
-      if($scope.matrix[row][col-1] === liveOrDead){
-          neighbours ++;
-      }
+        $scope.initMatrix(5,5);
+        $scope.aliveCell(1,2);
+        $scope.aliveCell(2,2);
+        $scope.aliveCell(3,2);
 
-      if($scope.matrix[row][col+1] === liveOrDead){
-          neighbours ++;
-      }
-      return neighbours;
-  }
+        function canOperateWithThisCell(row,col){
+            return (canAddAndSubstractAColumn(col) && canAddAndSubstractARow(row));
+        }
 
-  function findColNeighbours(row,col,liveOrDead){
-      var neighbours = 0;
-      if($scope.matrix[row+1][col] === liveOrDead){
-          neighbours ++;
-      }
+        function canAddAndSubstractAColumn(col){
+            var maxColumns = $scope.matrix[0].length;
+            var addColumn = col+1 ;
+            var substractColumn = col-1;
 
-      if($scope.matrix[row-1][col] === liveOrDead){
-          neighbours ++;
-      }
-      return neighbours;
-  }
+            return (substractColumn > -1 && addColumn < maxColumns);
+        }
 
-  function findDiagonalNeighbours(row,col, liveOrDead){
-      var neighbours = 0;
-      if($scope.matrix[row-1][col-1] === liveOrDead){
-          neighbours ++;
-      }
+        function canAddAndSubstractARow(row){
+            var maxRows = $scope.matrix.length;
+            var addRow = row+1 ;
+            var substractRow = row-1;
 
-      if($scope.matrix[row-1][col+1] === liveOrDead){
-          neighbours ++;
-      }
+            return (substractRow > -1 && addRow < maxRows);
+        }
 
-      if($scope.matrix[row+1][col-1] === liveOrDead){
-          neighbours ++;
-      }
+        function findRowNeighbours(row, col) {
+            var neighbours = 0;
+            if ($scope.matrix[row][col - 1] === '*') {
+                neighbours++;
+            }
 
-      if($scope.matrix[row+1][col+1] === liveOrDead){
-          neighbours ++;
-      }
+            if ($scope.matrix[row][col + 1] === '*') {
+                neighbours++;
+            }
+            return neighbours;
+        }
 
-      return neighbours;
-  }
+        function findColNeighbours(row, col) {
+            var neighbours = 0;
+            if ($scope.matrix[row + 1][col] === '*') {
+                neighbours++;
+            }
 
-  function killCellFirstCase(neighbours, row, col){
-      if(neighbours < 2 ){
-          $scope.matrix[row][col] = '.';
-      }
-  }
+            if ($scope.matrix[row - 1][col] === '*') {
+                neighbours++;
+            }
+            return neighbours;
+        }
 
-  function killCellSecondCase(neighbours, row, col){
-      if(neighbours > 3 ){
-          $scope.matrix[row][col] = '.';
-      }
-  }
+        function findDiagonalNeighbours(row, col) {
+            var neighbours = 0;
+            if ($scope.matrix[row - 1][col - 1] === '*') {
+                neighbours++;
+            }
 
+            if ($scope.matrix[row - 1][col + 1] === '*') {
+                neighbours++;
+            }
 
+            if ($scope.matrix[row + 1][col - 1] === '*') {
+                neighbours++;
+            }
 
-})
-.config(function ($routeProvider) {
-  $routeProvider
-  .when('/game_of_life', {
-    templateUrl: 'scripts/game_of_life/views/game_of_life.html',
-    controller: 'game_of_life'
-  });
-});
+            if ($scope.matrix[row + 1][col + 1] === '*') {
+                neighbours++;
+            }
+            return neighbours;
+        }
+
+        function killCell(neighbours, row, col) {
+            if (neighbours < 2) {
+                $scope.matrixClone[row][col] = '.';
+            }else if(neighbours > 3 ){
+                $scope.matrixClone[row][col] = '.';
+            }
+        }
+
+        function aliveCell(neighbours, row, col){
+            if(neighbours === 3 ){
+                $scope.matrixClone[row][col] = '*';
+            }
+        }
+
+    })
+    .config(function ($routeProvider) {
+        $routeProvider
+            .when('/game_of_life', {
+                templateUrl: 'scripts/game_of_life/views/game_of_life.html',
+                controller: 'game_of_life'
+            });
+    });
