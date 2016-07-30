@@ -23,59 +23,75 @@ angular.module('Game_of_life')
   };
 
   $scope.analyzeMatrix = function(){
-      var neighbours = 0;
+      var liveCellNeighbours = 0;
+      //var deadCellNeighbours = 0;
       for(var i=0; i<$scope.matrix.length; i++) {
           for(var j=0; j<$scope.matrix[i].length; j++){
               if($scope.matrix[i][j] === '*'){
-                  neighbours = neighbours + findRowNeighbours(i,j);
-                  neighbours = neighbours + findColNeighbours(i,j);
-                  neighbours = neighbours + findDiagonalNeighbours(i,j);
+                  liveCellNeighbours = liveCellNeighbours + findRowNeighbours(i,j,'*');
+                  liveCellNeighbours = liveCellNeighbours + findColNeighbours(i,j,'*');
+                  liveCellNeighbours = liveCellNeighbours + findDiagonalNeighbours(i,j,'*');
               }
-              killCellFirstCase(neighbours, i, j);
-              killCellSecondCase(neighbours, i, j);
+              //else{
+              //    deadCellNeighbours = deadCellNeighbours + findRowNeighbours(i,j,'.');
+              //    deadCellNeighbours = deadCellNeighbours + findColNeighbours(i,j,'.');
+              //    deadCellNeighbours = deadCellNeighbours + findDiagonalNeighbours(i,j,'.');
+              //}
+
+              killCellFirstCase(liveCellNeighbours, i, j);
+              killCellSecondCase(liveCellNeighbours, i, j);
           }
       }
   };
 
-  function findRowNeighbours(row,col){
+  $scope.toggle = function(){
+     $scope.aliveCell(0,0);
+  };
+
+  $scope.initMatrix(4,8);
+  $scope.aliveCell(1,4);
+  $scope.aliveCell(2,4);
+  $scope.aliveCell(2,3);
+
+  function findRowNeighbours(row,col,liveOrDead){
       var neighbours = 0;
-      if($scope.matrix[row][col-1] === '*'){
+      if($scope.matrix[row][col-1] === liveOrDead){
           neighbours ++;
       }
 
-      if($scope.matrix[row][col+1] === '*'){
+      if($scope.matrix[row][col+1] === liveOrDead){
           neighbours ++;
       }
       return neighbours;
   }
 
-  function findColNeighbours(row,col){
+  function findColNeighbours(row,col,liveOrDead){
       var neighbours = 0;
-      if($scope.matrix[row+1][col] === '*'){
+      if($scope.matrix[row+1][col] === liveOrDead){
           neighbours ++;
       }
 
-      if($scope.matrix[row-1][col] === '*'){
+      if($scope.matrix[row-1][col] === liveOrDead){
           neighbours ++;
       }
       return neighbours;
   }
 
-  function findDiagonalNeighbours(row,col){
+  function findDiagonalNeighbours(row,col, liveOrDead){
       var neighbours = 0;
-      if($scope.matrix[row-1][col-1] === '*'){
+      if($scope.matrix[row-1][col-1] === liveOrDead){
           neighbours ++;
       }
 
-      if($scope.matrix[row-1][col+1] === '*'){
+      if($scope.matrix[row-1][col+1] === liveOrDead){
           neighbours ++;
       }
 
-      if($scope.matrix[row+1][col-1] === '*'){
+      if($scope.matrix[row+1][col-1] === liveOrDead){
           neighbours ++;
       }
 
-      if($scope.matrix[row+1][col+1] === '*'){
+      if($scope.matrix[row+1][col+1] === liveOrDead){
           neighbours ++;
       }
 
