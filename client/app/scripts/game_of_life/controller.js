@@ -65,10 +65,36 @@ angular.module('Game_of_life')
             $scope.matrix = $scope.matrixClone;
         };
 
-        $scope.initMatrix(5,5);
-        $scope.aliveCell(1,2);
-        $scope.aliveCell(2,2);
-        $scope.aliveCell(3,2);
+        /*blinker(period 2)*/
+        //$scope.initMatrix(5,5);
+        //$scope.aliveCell(1,2);
+        //$scope.aliveCell(2,2);
+        //$scope.aliveCell(3,2);
+
+        /*toad (period 2)*/
+        //$scope.initMatrix(6,6);
+        //$scope.aliveCell(2,2);
+        //$scope.aliveCell(2,3);
+        //$scope.aliveCell(2,4);
+        //$scope.aliveCell(3,1);
+        //$scope.aliveCell(3,2);
+        //$scope.aliveCell(3,3);
+
+        /*pentadeclathon(period 15)*/
+        $scope.initMatrix(18,11);
+        $scope.aliveCell(4,5);
+        $scope.aliveCell(5,5);
+        $scope.aliveCell(6,4);
+        $scope.aliveCell(6,6);
+        $scope.aliveCell(7,5);
+        $scope.aliveCell(8,5);
+        $scope.aliveCell(9,5);
+        $scope.aliveCell(10,5);
+        $scope.aliveCell(11,4);
+        $scope.aliveCell(11,6);
+        $scope.aliveCell(12,5);
+        $scope.aliveCell(13,5);
+
 
         function canOperateWithThisCell(row,col){
             return (canAddAndSubstractAColumn(col) && canAddAndSubstractARow(row));
