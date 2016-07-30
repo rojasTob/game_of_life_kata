@@ -1,7 +1,6 @@
-<div ng-repeat="row in matrix">
-    <span ng-repeat="col in row track by $index" class="whiteCell" ng-class="{ liveCell : col === '*' }">
-
-    </span>
+<div ng-repeat="row in matrix" class="removeSpaceBetweenRows">
+    <div ng-repeat="col in row track by $index" class="whiteCell" ng-class="{ liveCell : col === '*' }"/>
 </div>
-<button ng-click="toggle()">Next</button>
+<br>
+<button ng-click="nextGeneration()">Next</button>
 <div><br><a href="#/">Home</a></div>
