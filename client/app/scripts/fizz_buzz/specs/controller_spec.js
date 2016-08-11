@@ -18,17 +18,17 @@ describe('Controller: fizz_buzz', function () {
         });
 
         it('should have a top number initialized', function(){
-            expect(scope.top_number).toEqual(0);
+            expect(scope.top_number).toEqual(1);
         });
 
         it('should have a result array initialized', function(){
-            expect(scope.resultsGame).toEqual([]);
+            expect(scope.results_game).toEqual([]);
         });
 
         it('should generate numbers from 1 to 10', function(){
             scope.top_number = 10;
             scope.generate_numbers();
-            expect(scope.resultsGame.length).toEqual(10);
+            expect(scope.results_game.length).toEqual(10);
         });
 
         it('if a number is divisible by 3 should return true', function(){
@@ -60,16 +60,16 @@ describe('Controller: fizz_buzz', function () {
         });
 
         it('when a number is not divisible by 3 or 5, the result should have the same number', function(){
-            expect(scope.analyzeResult(4)).toEqual(4);
+            expect(scope.analyzeResult(4)).toEqual('4');
         });
 
         it('should generate numbers from 1 to 10', function(){
             scope.top_number = 16;
             scope.generate_numbers();
-            expect(scope.resultsGame[2]).toEqual('Fizz');
-            expect(scope.resultsGame[3]).toEqual(4);
-            expect(scope.resultsGame[4]).toEqual('Buzz');
-            expect(scope.resultsGame[14]).toEqual('FizzBuzz');
+            expect(scope.results_game[2]).toEqual('Fizz');
+            expect(scope.results_game[3]).toEqual('4');
+            expect(scope.results_game[4]).toEqual('Buzz');
+            expect(scope.results_game[14]).toEqual('FizzBuzz');
         });
 
     });

@@ -4,13 +4,15 @@ angular.module('Fizz_Buzz')
     .controller('fizz_buzz', function ($scope) {
 
         $scope.controller_loaded = 'Fizz Buzz loaded';
-        $scope.top_number = 0;
-        $scope.resultsGame = [];
+        $scope.top_number = 1;
+        $scope.results_game = [];
 
         $scope.generate_numbers = function(){
+            $scope.results_game = [];
+            console.log('generate_numbers');
             for(var position = 0 ; position < $scope.top_number ; position++){
                 var number = position + 1;
-                $scope.resultsGame[position] = $scope.analyzeResult(number);
+                $scope.results_game[position] = $scope.analyzeResult(number);
             }
         };
 
@@ -32,7 +34,7 @@ angular.module('Fizz_Buzz')
                 result = result.concat('Buzz');
             }
 
-            return result ? result : number;
+            return result ? result : number.toString();
         };
 
 

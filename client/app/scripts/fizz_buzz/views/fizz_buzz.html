@@ -1,4 +1,17 @@
-<div>
-    <h3>Fizz Buzz</h3>
+<h3>Fizz Buzz</h3>
+<br>
+<label class="kataFont">Top Number:
+    <input type="number" name="input" ng-model="top_number"
+           min="0" max="99" required>
+</label>
+<br>
+<button ng-click="generate_numbers()" class="kataFont">Generate</button>
+<br>
+<br>
+<div class="fizzBuzzPanel">
+    <div class="fizzBuzzItem kataFont" ng-repeat="result in results_game track by $index">
+    {{result}}
+    </div>
 </div>
-<div><br><a href="#/">Home</a></div>
+
+<div><br><a href="#/" class="kataFont">Home</a></div>
