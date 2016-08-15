@@ -9,10 +9,9 @@ angular.module('Fizz_Buzz')
 
         $scope.generate_numbers = function(){
             $scope.results_game = [];
-            console.log('generate_numbers');
             for(var position = 0 ; position < $scope.top_number ; position++){
                 var number = position + 1;
-                $scope.results_game[position] = $scope.analyzeResult(number);
+                $scope.results_game[position] = $scope.analyze_result(number);
             }
         };
 
@@ -24,8 +23,9 @@ angular.module('Fizz_Buzz')
             return ((number % 5) === 0);
         };
 
-        $scope.analyzeResult = function(number){
+        $scope.analyze_result = function(number){
             var result = '';
+
             if($scope.divisible_by_three(number)){
                 result = result.concat('Fizz');
             }
@@ -34,7 +34,7 @@ angular.module('Fizz_Buzz')
                 result = result.concat('Buzz');
             }
 
-            return result ? result : number.toString();
+            return result || number.toString();
         };
 
 

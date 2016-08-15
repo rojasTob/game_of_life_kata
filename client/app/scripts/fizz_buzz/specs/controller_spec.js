@@ -18,7 +18,7 @@ describe('Controller: fizz_buzz', function () {
         });
 
         it('should have a top number initialized', function(){
-            expect(scope.top_number).toEqual(1);
+            expect(scope.top_number).toBe(1);
         });
 
         it('should have a result array initialized', function(){
@@ -28,42 +28,42 @@ describe('Controller: fizz_buzz', function () {
         it('should generate numbers from 1 to 10', function(){
             scope.top_number = 10;
             scope.generate_numbers();
-            expect(scope.results_game.length).toEqual(10);
+            expect(scope.results_game.length).toBe(10);
         });
 
         it('if a number is divisible by 3 should return true', function(){
-            expect(scope.divisible_by_three(3)).toEqual(true);
+            expect(scope.divisible_by_three(3)).toBe(true);
         });
 
         it('if a number is not divisible by 3 should return false', function(){
-            expect(scope.divisible_by_three(4)).toEqual(false);
+            expect(scope.divisible_by_three(4)).toBe(false);
         });
 
         it('if a number is divisible by 5 should return true', function(){
-            expect(scope.divisible_by_five(5)).toEqual(true);
+            expect(scope.divisible_by_five(5)).toBe(true);
         });
 
         it('if a number is not divisible by 5 should return false', function(){
-            expect(scope.divisible_by_five(4)).toEqual(false);
+            expect(scope.divisible_by_five(4)).toBe(false);
         });
 
         it('when a number is divisible by 3, the result should have the word Fizz instead of the number', function(){
-            expect(scope.analyzeResult(6)).toEqual('Fizz');
+            expect(scope.analyze_result(6)).toEqual('Fizz');
         });
 
         it('when a number is divisible by 5, the result should have the word Buzz instead of the number', function(){
-            expect(scope.analyzeResult(10)).toEqual('Buzz');
+            expect(scope.analyze_result(10)).toEqual('Buzz');
         });
 
         it('when a number is divisible by 3 and 5, the result should have the word FizzBuzz instead of the number', function(){
-            expect(scope.analyzeResult(15)).toEqual('FizzBuzz');
+            expect(scope.analyze_result(15)).toEqual('FizzBuzz');
         });
 
         it('when a number is not divisible by 3 or 5, the result should have the same number', function(){
-            expect(scope.analyzeResult(4)).toEqual('4');
+            expect(scope.analyze_result(4)).toEqual('4');
         });
 
-        it('should generate numbers from 1 to 10', function(){
+        it('should generate numbers from 1 to 16 and should return the result', function(){
             scope.top_number = 16;
             scope.generate_numbers();
             expect(scope.results_game[2]).toEqual('Fizz');
