@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('Fizz_Buzz')
-    .controller('fizz_buzz', function ($scope) {
+    .controller('fizz_buzz', function ($scope, _) {
 
         $scope.controller_loaded = 'Fizz Buzz loaded';
         $scope.top_number = 1;
@@ -9,10 +9,9 @@ angular.module('Fizz_Buzz')
 
         $scope.generate_numbers = function(){
             $scope.results_game = [];
-            for(var position = 0 ; position < $scope.top_number ; position++){
-                var number = position + 1;
-                $scope.results_game[position] = $scope.analyze_result(number);
-            }
+            _.each(_.range($scope.top_number), function(number){
+                $scope.results_game[number] = $scope.analyze_result(number+1);
+            });
         };
 
         $scope.divisible_by_three = function(number){
@@ -36,9 +35,6 @@ angular.module('Fizz_Buzz')
 
             return result || number.toString();
         };
-
-
-
     })
     .config(function ($routeProvider) {
         $routeProvider

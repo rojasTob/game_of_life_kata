@@ -3,6 +3,7 @@
 describe('Controller: fizz_buzz', function () {
 
     beforeEach(module('Fizz_Buzz'));
+    beforeEach(module('underscore'));
 
     var controller;
     var scope;
@@ -74,7 +75,7 @@ describe('Controller: fizz_buzz', function () {
 
     });
 
-    describe('when going to /fizz_buzz', function () {
+   describe('when going to /fizz_buzz', function () {
 
         var route, location, rootScope, httpBackend;
 
