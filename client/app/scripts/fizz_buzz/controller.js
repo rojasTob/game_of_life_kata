@@ -9,7 +9,8 @@ angular.module('Fizz_Buzz')
 
         $scope.generate_numbers = function(){
             $scope.results_game = [];
-            _.each(_.range($scope.top_number), function(number){
+
+            _(_.range($scope.top_number)).each(function(number){
                 $scope.results_game[number] = $scope.analyze_result(number+1);
             });
         };
