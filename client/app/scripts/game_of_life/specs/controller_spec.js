@@ -3,6 +3,7 @@
 describe('Controller: game_of_life', function () {
 
     beforeEach(module('Game_of_life'));
+    beforeEach(module('underscore'));
 
     var controller;
     var scope;
@@ -124,7 +125,7 @@ describe('Controller: game_of_life', function () {
             expect(scope.matrixClone).toEqual(matrixResult);
         });
 
-        it('a dead cell with exactly three live neighbours should be a live cell.',function(){
+        it('should analyze the matrix with all rules',function(){
             var matrixResult = [
                 ['.', '.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '*', '*', '.', '.', '.'],
@@ -135,9 +136,7 @@ describe('Controller: game_of_life', function () {
             scope.aliveCell(1, 4);
             scope.aliveCell(2, 3);
             scope.aliveCell(2, 4);
-            scope.cloneMatrix();
-            scope.analyzeAliveCells();
-            scope.analyzeDeadCells();
+            scope.next_generation();
             expect(scope.matrixClone).toEqual(matrixResult);
         });
 

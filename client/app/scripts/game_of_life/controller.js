@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('Game_of_life')
-    .controller('game_of_life', function ($scope) {
+    .controller('game_of_life', function ($scope, _) {
 
         $scope.controller_loaded = 'Game of life loaded!';
         $scope.matrix = [];
@@ -49,15 +49,11 @@ angular.module('Game_of_life')
 
         $scope.cloneMatrix = function(){
             for (var row = 0; row < $scope.matrix.length; row++) {
-                var rowClone = [];
-                for(var col = 0 ; col< $scope.matrix[row].length ; col++){
-                    rowClone[col] = $scope.matrix[row][col];
-                }
-                $scope.matrixClone[row] = rowClone;
+                $scope.matrixClone[row] = _($scope.matrix[row]).clone();
             }
         };
 
-        $scope.nextGeneration = function () {
+        $scope.next_generation = function () {
             $scope.matrixClone = [];
             $scope.cloneMatrix();
             $scope.analyzeAliveCells();
