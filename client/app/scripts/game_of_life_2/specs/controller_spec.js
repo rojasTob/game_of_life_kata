@@ -29,17 +29,30 @@ describe('Controller: game_of_life_2', function(){
         });
 
         it('should insert an alive cell in the matrix', function () {
-            scope.init_matrix(4, 8);
-            var matrixWithAliveCells = [
+            var matrix_with_alive_cells = [
                 ['.', '.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '*', '.', '.', '.'],
                 ['.', '.', '.', '*', '*', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.', '.']];
 
+            scope.init_matrix(4, 8);
             scope.marked_positions = [{row: 1, col: 4},{row: 2, col: 4},{row: 2, col: 3}];
             scope.mark_positions();
-            expect(scope.matrix).toEqual(matrixWithAliveCells);
+            expect(scope.matrix).toEqual(matrix_with_alive_cells);
+        });
 
+        it('should clone the main matrix', function () {
+            var matrix_cloned = [
+                ['.', '.', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '*', '.', '.', '.'],
+                ['.', '.', '.', '*', '*', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.', '.']];
+
+            scope.init_matrix(4, 8);
+            scope.marked_positions = [{row: 1, col: 4},{row: 2, col: 4},{row: 2, col: 3}];
+            scope.mark_positions();
+            scope.clone_matrix();
+            expect(scope.matrix_clone).toEqual(matrix_cloned);
         });
 
     });

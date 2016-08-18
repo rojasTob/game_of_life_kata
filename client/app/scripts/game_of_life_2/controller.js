@@ -6,6 +6,7 @@ angular.module('Game_of_life_2')
         $scope.controller_loaded = 'Game of life 2 loaded!';
         $scope.matrix = [];
         $scope.marked_positions =[];
+        $scope.matrix_clone = [];
 
         $scope.init_matrix = function(rows, cols){
             $scope.matrix = _(rows).range().map(function () {
@@ -21,6 +22,11 @@ angular.module('Game_of_life_2')
             });
         };
 
+        $scope.clone_matrix = function(){
+            _($scope.matrix).each(function(row){
+                $scope.matrix_clone.push(_(row).clone());
+            });
+        };
 
     })
     .config(function($routeProvider){
