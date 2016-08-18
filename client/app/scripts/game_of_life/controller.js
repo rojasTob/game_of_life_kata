@@ -61,21 +61,6 @@ angular.module('Game_of_life')
             $scope.matrix = $scope.matrixClone;
         };
 
-        /*blinker(period 2)*/
-        //$scope.initMatrix(5,5);
-        //$scope.aliveCell(1,2);
-        //$scope.aliveCell(2,2);
-        //$scope.aliveCell(3,2);
-
-        /*toad (period 2)*/
-        //$scope.initMatrix(6,6);
-        //$scope.aliveCell(2,2);
-        //$scope.aliveCell(2,3);
-        //$scope.aliveCell(2,4);
-        //$scope.aliveCell(3,1);
-        //$scope.aliveCell(3,2);
-        //$scope.aliveCell(3,3);
-
         /*pentadeclathon(period 15)*/
         $scope.initMatrix(18,11);
         $scope.aliveCell(4,5);
