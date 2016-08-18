@@ -4,7 +4,8 @@ angular.module('App', [
   'ngRoute',
   'Game_of_life',
   'Fizz_Buzz',
-  'underscore'
+  'underscore',
+   'Game_of_life_2'
 ])
 .config(function ($routeProvider) {
   $routeProvider
