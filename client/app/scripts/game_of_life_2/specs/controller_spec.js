@@ -66,7 +66,7 @@ describe('Controller: game_of_life_2', function(){
             scope.marked_positions = [{row: 1, col: 4},{row: 2, col: 4},{row: 2, col: 3}];
             scope.mark_positions();
             scope.clone_matrix();
-            scope.analyzeAliveCells();
+            scope.analyze_alive_cells();
             expect(scope.matrix_clone).toEqual(matrix_result);
         });
 
@@ -81,7 +81,7 @@ describe('Controller: game_of_life_2', function(){
             scope.marked_positions = [{row: 1, col: 1},{row: 1, col: 2},{row: 1, col: 4},{row: 1, col: 5},{row: 2, col: 4}];
             scope.mark_positions();
             scope.clone_matrix();
-            scope.analyzeAliveCells();
+            scope.analyze_alive_cells();
             expect(scope.matrix_clone).toEqual(matrix_result);
         });
 
@@ -96,7 +96,7 @@ describe('Controller: game_of_life_2', function(){
             scope.marked_positions = [{row: 1, col: 1},{row: 1, col: 2}];
             scope.mark_positions();
             scope.clone_matrix();
-            scope.analyzeAliveCells();
+            scope.analyze_alive_cells();
             expect(scope.matrix_clone).toEqual(matrix_result);
         });
 
@@ -111,7 +111,7 @@ describe('Controller: game_of_life_2', function(){
             scope.marked_positions = [{row: 1, col: 3},{row: 1, col: 4},{row: 1, col: 5},{row: 2, col: 3},{row: 2, col: 4}];
             scope.mark_positions();
             scope.clone_matrix();
-            scope.analyzeAliveCells();
+            scope.analyze_alive_cells();
             expect(scope.matrix_clone).toEqual(matrix_result);
         });
 
