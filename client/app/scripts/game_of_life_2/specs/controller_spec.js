@@ -19,16 +19,28 @@ describe('Controller: game_of_life_2', function(){
         });
 
         it('should set init state of the matrix', function () {
-            var matrixInit = [
+            var matrix_init = [
                 ['.', '.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.', '.']];
-            scope.initMatrix(4, 8);
-            expect(scope.matrix).toEqual(matrixInit);
+            scope.init_matrix(4, 8);
+            expect(scope.matrix).toEqual(matrix_init);
         });
 
+        it('should insert an alive cell in the matrix', function () {
+            scope.init_matrix(4, 8);
+            var matrixWithAliveCells = [
+                ['.', '.', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '*', '.', '.', '.'],
+                ['.', '.', '.', '*', '*', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.', '.']];
 
+            scope.marked_positions = [{row: 1, col: 4},{row: 2, col: 4},{row: 2, col: 3}];
+            scope.mark_positions();
+            expect(scope.matrix).toEqual(matrixWithAliveCells);
+
+        });
 
     });
 
