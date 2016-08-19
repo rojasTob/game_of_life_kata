@@ -28,37 +28,42 @@ angular.module('Game_of_life_2')
             });
         };
 
-        $scope.analyze_alive_cells = function () {
+        $scope.analyze_cells = function () {
 
             _($scope.matrix).each(function(row,index_row){
                 _(row).each(function(col,index_col){
+                    var cell_neighbours = 0;
+
                     if (col === '*' && can_operate_with_this_cell(index_row,index_col)) {
-                        var neighbours = 0;
-                        neighbours = find_neighbours_number(index_row, index_col);
-                        kill_cell(neighbours, index_row, index_col);
+                        cell_neighbours = $scope.find_neighbours_number(index_row, index_col);
+                        kill_cell(cell_neighbours, index_row, index_col);
+                    }else if (col === '.' && can_operate_with_this_cell(index_row,index_col)) {
+                        cell_neighbours = $scope.find_neighbours_number(index_row, index_col);
+                        alive_cell(cell_neighbours, index_row, index_col);
                     }
                 });
             });
         };
 
-        $scope.analyze_dead_cells = function () {
+        $scope.find_neighbours_number = function (row,col){
+            var neighbours = 0;
+            var position_neighbours = [{row: row, col: (col+1)},{row: row, col: (col-1)},
+                {row: (row-1), col: col},{row: (row+1), col: col},
+                {row: (row-1), col: (col-1)},{row: (row-1), col: (col+1)},{row: (row+1), col: (col-1)},{row: (row+1), col: (col+1)}];
 
-            _($scope.matrix).each(function(row,index_row){
-                _(row).each(function(col,index_col){
-                    if (col === '.' && can_operate_with_this_cell(index_row,index_col)) {
-                        var neighbours = 0;
-                        neighbours = find_neighbours_number(index_row, index_col);
-                        alive_cell(neighbours, index_row, index_col);
-                    }
-                });
+            _(position_neighbours).each(function(position_neighbour){
+                if(has_neighbours(position_neighbour.row,position_neighbour.col)){
+                    neighbours ++;
+                }
             });
+
+            return neighbours;
         };
 
         $scope.next_generation = function () {
             $scope.matrix_clone = [];
             $scope.clone_matrix();
-            $scope.analyze_alive_cells();
-            $scope.analyze_dead_cells();
+            $scope.analyze_cells();
             $scope.matrix = $scope.matrix_clone;
         };
 
@@ -85,21 +90,6 @@ angular.module('Game_of_life_2')
             var substractRow = row-1;
 
             return (substractRow > -1 && addRow < maxRows);
-        }
-
-        function find_neighbours_number(row,col){
-            var neighbours = 0;
-            var position_neighbours = [{row: row, col: (col+1)},{row: row, col: (col-1)},
-                                      {row: (row-1), col: col},{row: (row+1), col: col},
-                                      {row: (row-1), col: (col-1)},{row: (row-1), col: (col+1)},{row: (row+1), col: (col-1)},{row: (row+1), col: (col+1)}];
-
-            _(position_neighbours).each(function(position_neighbour){
-                if(has_neighbours(position_neighbour.row,position_neighbour.col)){
-                    neighbours ++;
-                }
-            });
-
-            return neighbours;
         }
 
         function has_neighbours(row,col){

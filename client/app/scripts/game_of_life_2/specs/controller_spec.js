@@ -55,68 +55,17 @@ describe('Controller: game_of_life_2', function(){
             expect(scope.matrix_clone).toEqual(matrix_cloned);
         });
 
-        it('a live cell with two live neighbours stay alive', function () {
-            var matrix_result = [
-                ['.', '.', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '*', '.', '.', '.'],
-                ['.', '.', '.', '*', '*', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.', '.']];
-
-            scope.init_matrix(4, 8);
-            scope.marked_positions = [{row: 1, col: 4},{row: 2, col: 4},{row: 2, col: 3}];
+        it('should count the number of neighbours',function(){
+            scope.init_matrix(4, 4);
+            scope.marked_positions = [{row: 1, col: 2},{row: 1, col: 3},{row: 2, col: 1},{row: 2, col: 2}];
             scope.mark_positions();
             scope.clone_matrix();
-            scope.analyze_alive_cells();
-            expect(scope.matrix_clone).toEqual(matrix_result);
+            var neighbours = scope.find_neighbours_number(2,1);
+            expect(neighbours).toBe(2);
         });
 
-        it('a live cell with fewer than two live neighbours should die', function () {
+        it('should analyze the matrix',function(){
             var matrix_result = [
-                ['.', '.', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '*', '*', '.', '.'],
-                ['.', '.', '.', '.', '*', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.', '.']];
-
-            scope.init_matrix(4, 8);
-            scope.marked_positions = [{row: 1, col: 1},{row: 1, col: 2},{row: 1, col: 4},{row: 1, col: 5},{row: 2, col: 4}];
-            scope.mark_positions();
-            scope.clone_matrix();
-            scope.analyze_alive_cells();
-            expect(scope.matrix_clone).toEqual(matrix_result);
-        });
-
-        it('two consecutive live cells should die', function () {
-            var matrix_result = [
-                ['.', '.', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.', '.']];
-
-            scope.init_matrix(4, 8);
-            scope.marked_positions = [{row: 1, col: 1},{row: 1, col: 2}];
-            scope.mark_positions();
-            scope.clone_matrix();
-            scope.analyze_alive_cells();
-            expect(scope.matrix_clone).toEqual(matrix_result);
-        });
-
-        it('a live cell with more than three live neighbours should die', function () {
-            var matrix_result = [
-                ['.', '.', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '*', '.', '*', '.', '.'],
-                ['.', '.', '.', '*', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.', '.']];
-
-            scope.init_matrix(4, 8);
-            scope.marked_positions = [{row: 1, col: 3},{row: 1, col: 4},{row: 1, col: 5},{row: 2, col: 3},{row: 2, col: 4}];
-            scope.mark_positions();
-            scope.clone_matrix();
-            scope.analyze_alive_cells();
-            expect(scope.matrix_clone).toEqual(matrix_result);
-        });
-
-        it('should analyze the matrix with all rules',function(){
-            var matrixResult = [
                 ['.', '.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '*', '*', '.', '.', '.'],
                 ['.', '.', '.', '*', '*', '.', '.', '.'],
@@ -125,8 +74,24 @@ describe('Controller: game_of_life_2', function(){
             scope.init_matrix(4, 8);
             scope.marked_positions = [{row: 1, col: 4},{row: 2, col: 3},{row: 2, col: 4}];
             scope.mark_positions();
+            scope.clone_matrix();
+            scope.analyze_cells();
+            expect(scope.matrix_clone).toEqual(matrix_result);
+        });
+
+        it('should calculate the next generation of the matrix', function(){
+            var matrix_result = [
+                                  ['.', '.', '.', '.', '.'],
+                                  ['.', '.', '.', '.', '.'],
+                                  ['.', '*', '*', '*', '.'],
+                                  ['.', '.', '.', '.', '.'],
+                                  ['.', '.', '.', '.', '.']];
+
+            scope.init_matrix(5, 5);
+            scope.marked_positions = [{row: 1, col: 2},{row: 2, col: 2},{row: 3, col: 2}];
+            scope.mark_positions();
             scope.next_generation();
-            expect(scope.matrix_clone).toEqual(matrixResult);
+            expect(scope.matrix_clone).toEqual(matrix_result);
         });
 
     });
