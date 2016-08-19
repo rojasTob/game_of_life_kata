@@ -1,1 +1,8 @@
 <h3>Game of Life 2</h3>
+<br>
+<div ng-repeat="row in matrix" class="removeSpaceBetweenRows">
+    <div ng-repeat="col in row track by $index" class="whiteCell" ng-class="{ liveCell : col === '*' }"/>
+</div>
+<br>
+<button ng-click="next_generation()" class="kataFont">Next</button>
+<div><br><a href="#/" class="kataFont">Home</a></div>

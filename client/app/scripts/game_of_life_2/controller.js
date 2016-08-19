@@ -71,6 +71,7 @@ angular.module('Game_of_life_2')
         $scope.marked_positions = [{row: 4, col: 5},{row: 5, col: 5},{row: 6, col: 4},{row: 6, col: 6},{row: 7, col: 5},
                                   {row: 8, col: 5},{row: 9, col: 5},{row: 10, col: 5},{row: 11, col: 4},{row: 11, col: 6},
                                   {row: 12, col: 5},{row: 13, col: 5}];
+        $scope.mark_positions();
 
         function can_operate_with_this_cell(row,col){
             return (can_add_and_substract_column(col) && can_add_and_substract_row(row));
