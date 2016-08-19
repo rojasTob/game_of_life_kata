@@ -34,7 +34,7 @@ angular.module('Game_of_life_2')
                 _(row).each(function(col,index_col){
                     if (col === '*' && can_operate_with_this_cell(index_row,index_col)) {
                         var neighbours = 0;
-                        neighbours = find_row_neighbours(index_row, index_col) + find_col_neighbours(index_row, index_col) + find_diagonal_neighbours(index_row, index_col);
+                        neighbours = find_neighbours_number(index_row, index_col);
                         kill_cell(neighbours, index_row, index_col);
                     }
                 });
@@ -47,7 +47,7 @@ angular.module('Game_of_life_2')
                 _(row).each(function(col,index_col){
                     if (col === '.' && can_operate_with_this_cell(index_row,index_col)) {
                         var neighbours = 0;
-                        neighbours = find_row_neighbours(index_row, index_col) + find_col_neighbours(index_row, index_col) + find_diagonal_neighbours(index_row, index_col);
+                        neighbours = find_neighbours_number(index_row, index_col);
                         alive_cell(neighbours, index_row, index_col);
                     }
                 });
@@ -87,48 +87,23 @@ angular.module('Game_of_life_2')
             return (substractRow > -1 && addRow < maxRows);
         }
 
-        function find_row_neighbours(row, col) {
+        function find_neighbours_number(row,col){
             var neighbours = 0;
-            if ($scope.matrix[row][col - 1] === '*') {
-                neighbours++;
-            }
+            var position_neighbours = [{row: row, col: (col+1)},{row: row, col: (col-1)},
+                                      {row: (row-1), col: col},{row: (row+1), col: col},
+                                      {row: (row-1), col: (col-1)},{row: (row-1), col: (col+1)},{row: (row+1), col: (col-1)},{row: (row+1), col: (col+1)}];
 
-            if ($scope.matrix[row][col + 1] === '*') {
-                neighbours++;
-            }
+            _(position_neighbours).each(function(position_neighbour){
+                if(has_neighbours(position_neighbour.row,position_neighbour.col)){
+                    neighbours ++;
+                }
+            });
+
             return neighbours;
         }
 
-        function find_col_neighbours(row, col) {
-            var neighbours = 0;
-            if ($scope.matrix[row + 1][col] === '*') {
-                neighbours++;
-            }
-
-            if ($scope.matrix[row - 1][col] === '*') {
-                neighbours++;
-            }
-            return neighbours;
-        }
-
-        function find_diagonal_neighbours(row, col) {
-            var neighbours = 0;
-            if ($scope.matrix[row - 1][col - 1] === '*') {
-                neighbours++;
-            }
-
-            if ($scope.matrix[row - 1][col + 1] === '*') {
-                neighbours++;
-            }
-
-            if ($scope.matrix[row + 1][col - 1] === '*') {
-                neighbours++;
-            }
-
-            if ($scope.matrix[row + 1][col + 1] === '*') {
-                neighbours++;
-            }
-            return neighbours;
+        function has_neighbours(row,col){
+            return ($scope.matrix[row][col] === '*') ;
         }
 
         function kill_cell(neighbours, row, col) {
