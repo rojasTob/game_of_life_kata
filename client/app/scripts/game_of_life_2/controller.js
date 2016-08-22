@@ -5,8 +5,10 @@ angular.module('Game_of_life_2')
 
         $scope.controller_loaded = 'Game of life 2 loaded!';
         $scope.matrix = [];
-        $scope.marked_positions =[];
         $scope.matrix_clone = [];
+        var marked_positions = [{row: 4, col: 5},{row: 5, col: 5},{row: 6, col: 4},{row: 6, col: 6},{row: 7, col: 5},
+            {row: 8, col: 5},{row: 9, col: 5},{row: 10, col: 5},{row: 11, col: 4},{row: 11, col: 6},
+            {row: 12, col: 5},{row: 13, col: 5}];
 
         $scope.init_matrix = function(rows, cols){
             $scope.matrix = _(rows).range().map(function () {
@@ -16,8 +18,8 @@ angular.module('Game_of_life_2')
             });
         };
 
-        $scope.mark_positions = function(){
-            _($scope.marked_positions).each(function(position){
+        $scope.mark_positions = function(marked_positions){
+            _(marked_positions).each(function(position){
                 $scope.matrix[position.row][position.col] = '*';
             });
         };
@@ -35,29 +37,14 @@ angular.module('Game_of_life_2')
                     var cell_neighbours = 0;
 
                     if (col === '*' && can_operate_with_this_cell(index_row,index_col)) {
-                        cell_neighbours = $scope.find_neighbours_number(index_row, index_col);
+                        cell_neighbours = find_neighbours_number(index_row, index_col);
                         kill_cell(cell_neighbours, index_row, index_col);
                     }else if (col === '.' && can_operate_with_this_cell(index_row,index_col)) {
-                        cell_neighbours = $scope.find_neighbours_number(index_row, index_col);
+                        cell_neighbours = find_neighbours_number(index_row, index_col);
                         alive_cell(cell_neighbours, index_row, index_col);
                     }
                 });
             });
-        };
-
-        $scope.find_neighbours_number = function (row,col){
-            var neighbours = 0;
-            var position_neighbours = [{row: row, col: (col+1)},{row: row, col: (col-1)},
-                {row: (row-1), col: col},{row: (row+1), col: col},
-                {row: (row-1), col: (col-1)},{row: (row-1), col: (col+1)},{row: (row+1), col: (col-1)},{row: (row+1), col: (col+1)}];
-
-            _(position_neighbours).each(function(position_neighbour){
-                if(has_neighbours(position_neighbour.row,position_neighbour.col)){
-                    neighbours ++;
-                }
-            });
-
-            return neighbours;
         };
 
         $scope.next_generation = function () {
@@ -68,10 +55,7 @@ angular.module('Game_of_life_2')
         };
 
         $scope.init_matrix(18,11);
-        $scope.marked_positions = [{row: 4, col: 5},{row: 5, col: 5},{row: 6, col: 4},{row: 6, col: 6},{row: 7, col: 5},
-                                  {row: 8, col: 5},{row: 9, col: 5},{row: 10, col: 5},{row: 11, col: 4},{row: 11, col: 6},
-                                  {row: 12, col: 5},{row: 13, col: 5}];
-        $scope.mark_positions();
+        $scope.mark_positions(marked_positions);
 
         function can_operate_with_this_cell(row,col){
             return (can_add_and_substract_column(col) && can_add_and_substract_row(row));
@@ -91,6 +75,21 @@ angular.module('Game_of_life_2')
             var substractRow = row-1;
 
             return (substractRow > -1 && addRow < maxRows);
+        }
+
+        function find_neighbours_number (row,col){
+            var neighbours = 0;
+            var position_neighbours = [{row: row, col: (col+1)},{row: row, col: (col-1)},
+                {row: (row-1), col: col},{row: (row+1), col: col},
+                {row: (row-1), col: (col-1)},{row: (row-1), col: (col+1)},{row: (row+1), col: (col-1)},{row: (row+1), col: (col+1)}];
+
+            _(position_neighbours).each(function(position_neighbour){
+                if(has_neighbours(position_neighbour.row,position_neighbour.col)){
+                    neighbours ++;
+                }
+            });
+
+            return neighbours;
         }
 
         function has_neighbours(row,col){

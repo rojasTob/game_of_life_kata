@@ -36,8 +36,8 @@ describe('Controller: game_of_life_2', function(){
                 ['.', '.', '.', '.', '.', '.', '.', '.']];
 
             scope.init_matrix(4, 8);
-            scope.marked_positions = [{row: 1, col: 4},{row: 2, col: 4},{row: 2, col: 3}];
-            scope.mark_positions();
+            var marked_positions = [{row: 1, col: 4},{row: 2, col: 4},{row: 2, col: 3}];
+            scope.mark_positions(marked_positions);
             expect(scope.matrix).toEqual(matrix_with_alive_cells);
         });
 
@@ -49,19 +49,10 @@ describe('Controller: game_of_life_2', function(){
                 ['.', '.', '.', '.', '.', '.', '.', '.']];
 
             scope.init_matrix(4, 8);
-            scope.marked_positions = [{row: 1, col: 4},{row: 2, col: 4},{row: 2, col: 3}];
-            scope.mark_positions();
+            var marked_positions = [{row: 1, col: 4},{row: 2, col: 4},{row: 2, col: 3}];
+            scope.mark_positions(marked_positions);
             scope.clone_matrix();
             expect(scope.matrix_clone).toEqual(matrix_cloned);
-        });
-
-        it('should count the number of neighbours',function(){
-            scope.init_matrix(4, 4);
-            scope.marked_positions = [{row: 1, col: 2},{row: 1, col: 3},{row: 2, col: 1},{row: 2, col: 2}];
-            scope.mark_positions();
-            scope.clone_matrix();
-            var neighbours = scope.find_neighbours_number(2,1);
-            expect(neighbours).toBe(2);
         });
 
         it('should analyze the matrix',function(){
@@ -72,8 +63,8 @@ describe('Controller: game_of_life_2', function(){
                 ['.', '.', '.', '.', '.', '.', '.', '.']];
 
             scope.init_matrix(4, 8);
-            scope.marked_positions = [{row: 1, col: 4},{row: 2, col: 3},{row: 2, col: 4}];
-            scope.mark_positions();
+            var marked_positions = [{row: 1, col: 4},{row: 2, col: 3},{row: 2, col: 4}];
+            scope.mark_positions(marked_positions);
             scope.clone_matrix();
             scope.analyze_cells();
             expect(scope.matrix_clone).toEqual(matrix_result);
@@ -88,8 +79,8 @@ describe('Controller: game_of_life_2', function(){
                                   ['.', '.', '.', '.', '.']];
 
             scope.init_matrix(5, 5);
-            scope.marked_positions = [{row: 1, col: 2},{row: 2, col: 2},{row: 3, col: 2}];
-            scope.mark_positions();
+            var marked_positions = [{row: 1, col: 2},{row: 2, col: 2},{row: 3, col: 2}];
+            scope.mark_positions(marked_positions);
             scope.next_generation();
             expect(scope.matrix_clone).toEqual(matrix_result);
         });
